@@ -76,7 +76,6 @@ function App() {
         );
       }
     }, 1000);
-  }, []);
 
   return (
     <div className="body">
