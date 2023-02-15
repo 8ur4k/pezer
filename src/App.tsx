@@ -101,15 +101,15 @@ function App() {
                 currentLinkInput.current ? currentLinkInput.current?.value : ""
               )
             }
-            className="clientSubmitButton"
+            className="copyButton"
             type="button"
             value="Copy"
           />
         </div>
         {callStatus == CallStatus.INCOMING_CALL && (
-          <div className="copyLink">
+          <div className="callMedia">
             <input
-              className="copyLinkButton"
+              className="pezerleButton"
               type="button"
               onClick={() => pezerle()}
               value="P E Z E R L E!"
