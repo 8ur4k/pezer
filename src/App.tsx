@@ -43,6 +43,7 @@ function App() {
       .catch((err) => {
         console.error("Failed to get local stream", err);
       });
+    setClientAddress("zort");
   }
 
   function endCall() {
@@ -114,6 +115,9 @@ function App() {
               onClick={() => pezerle()}
               value="P E Z E R L E!"
             />
+            <p onClick={() => endCall()} className="declineText">
+              Press to decline.
+            </p>
             <audio
               ref={ringtone!}
               autoPlay

@@ -133,3 +133,15 @@ body {
 .dNone {
   display: none;
 }
+
+.declineText {
+  text-align: center;
+  padding: 0.5em;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.declineText:hover {
+  color: #019f7a;
+  transition: 0.2s;
+}
