@@ -31,16 +31,13 @@ function App() {
   }
 
   function pezerle() {
-    console.log("pezerle");
     setCallStatus(CallStatus.ON_CALL);
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then((stream) => {
-        console.log({ currentCall });
         currentCall?.current?.answer(stream); // Answer the call with an A/V stream.
         currentCall?.current?.on("stream", (remoteStream) => {
           if (auido1.current) auido1.current.srcObject = remoteStream;
-          console.log("answer");
         });
       })
       .catch((err) => {
@@ -55,7 +52,6 @@ function App() {
   };
 
   useEffect(() => {
-    console.log("useEffect");
     const queryParams = new URLSearchParams(document.location.search);
     const callAdress = queryParams.get("to");
     const baseUrl = "http://localhost:3000/";
@@ -69,17 +65,14 @@ function App() {
     peer.on("call", (call) => {
       setCallStatus(CallStatus.INCOMING_CALL);
       currentCall.current = call;
-      console.log("sdfsdfgsdffsd");
     });
 
     setTimeout(() => {
-      console.log("denemneee??" + callAdress);
       if (callAdress) {
         navigator.mediaDevices.getUserMedia({ audio: true }).then(
           (stream) => {
             const call = peer.call(callAdress, stream);
             call.on("stream", (remoteStream) => {
-              console.log("denemneee!" + callStatus);
             });
           },
           (err) => {
