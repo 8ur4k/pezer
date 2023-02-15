@@ -45,6 +45,10 @@ function App() {
       });
   }
 
+  function endCall() {
+    currentCall?.current?.close();
+    setCallStatus(CallStatus.IDLE);
+  }
 
   useEffect(() => {
     const queryParams = new URLSearchParams(document.location.search);
@@ -116,6 +120,16 @@ function App() {
               id="audio-ringtone"
               src="/assets/ringtone.mp3"
             ></audio>
+          </div>
+        )}
+        {callStatus == CallStatus.ON_CALL && (
+          <div className="callMedia">
+            <input
+              className="endCallButton"
+              type="button"
+              onClick={() => endCall()}
+              value="END CALL"
+            />
           </div>
         )}
         <audio
