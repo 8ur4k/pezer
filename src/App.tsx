@@ -52,7 +52,7 @@ function App() {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(document.location.search);
-    const callAdress = queryParams.get("to");
+    const callAddress = queryParams.get("to");
     const baseUrl = "http://localhost:3000/";
 
     if (currentLinkInput.current) {
