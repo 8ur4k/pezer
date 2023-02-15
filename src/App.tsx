@@ -55,8 +55,12 @@ function App() {
     const peer = new Peer(clientAddress);
 
     peer.on("call", (call) => {
-      setCallStatus(CallStatus.INCOMING_CALL);
-      currentCall.current = call;
+      console.log("call");
+      if (callStatus == "IDLE") {
+        console.log(callStatus);
+        setCallStatus("INCOMING_CALL");
+        currentCall.current = call;
+      }
     });
 
     setTimeout(() => {
