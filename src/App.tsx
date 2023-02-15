@@ -18,6 +18,11 @@ function App() {
   let currentCall = useRef<MediaConnection | null>(null);
 
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.IDLE);
+  const [clientAddress, setClientAddress] = useState(
+    Math.random()
+      .toString(36)
+      .substring(2, 7 + 2)
+  );
 
   function copyToClipboard(str: string) {
     if (navigator && navigator.clipboard && navigator.clipboard.writeText)
@@ -53,7 +58,6 @@ function App() {
     console.log("useEffect");
     const queryParams = new URLSearchParams(document.location.search);
     const callAdress = queryParams.get("to");
-    const clientAddress = genRand(7);
     const baseUrl = "http://localhost:3000/";
 
     if (currentLinkInput.current) {
