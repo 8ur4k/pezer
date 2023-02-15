@@ -3,13 +3,6 @@ import logo from "./logo.svg";
 import "./App.css";
 import Peer, { MediaConnection } from "peerjs";
 
-enum CallStatus {
-  IDLE,
-  INCOMING_CALL,
-  OUTGOING_CALL,
-  ON_CALL,
-}
-
 function App() {
   let currentLinkInput = useRef<HTMLInputElement>(null);
   let auido1 = useRef<HTMLAudioElement>(null);
@@ -17,7 +10,7 @@ function App() {
   let amogus = useRef<HTMLAudioElement>(null);
   let currentCall = useRef<MediaConnection | null>(null);
 
-  const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.IDLE);
+  const [callStatus, setCallStatus] = useState("IDLE");
   const [clientAddress, setClientAddress] = useState(
     Math.random()
       .toString(36)
@@ -31,7 +24,7 @@ function App() {
   }
 
   function pezerle() {
-    setCallStatus(CallStatus.ON_CALL);
+    setCallStatus("ON_CALL");
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then((stream) => {
@@ -43,12 +36,11 @@ function App() {
       .catch((err) => {
         console.error("Failed to get local stream", err);
       });
-    setClientAddress("zort");
   }
 
   function endCall() {
     currentCall?.current?.close();
-    setCallStatus(CallStatus.IDLE);
+    setCallStatus("IDLE");
   }
 
   useEffect(() => {
@@ -107,7 +99,7 @@ function App() {
             value="Copy"
           />
         </div>
-        {callStatus == CallStatus.INCOMING_CALL && (
+        {callStatus == "INCOMING_CALL" && (
           <div className="callMedia">
             <input
               className="pezerleButton"
@@ -126,7 +118,7 @@ function App() {
             ></audio>
           </div>
         )}
-        {callStatus == CallStatus.ON_CALL && (
+        {callStatus == "ON_CALL" && (
           <div className="callMedia">
             <input
               className="endCallButton"
@@ -143,7 +135,7 @@ function App() {
           autoPlay
           id="audio-1"
         ></audio>
-        {callStatus == CallStatus.ON_CALL && (
+        {callStatus == "ON_CALL" && (
           <div>
             <audio ref={amogus!} autoPlay src="/assets/amogus.mp3"></audio>
           </div>
