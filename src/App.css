@@ -52,7 +52,7 @@ body {
   height: 100%;
 }
 
-.clientSubmitButton {
+.copyButton {
   background-color: #019f7a;
   font-size: 20px;
   color: #1d222e;
@@ -62,7 +62,7 @@ body {
   height: 100%;
 }
 
-.clientSubmitButton:hover {
+.copyButton:hover {
   transition: 300ms;
   cursor: pointer;
   color: #ffffff;
@@ -88,12 +88,12 @@ body {
   }
 }
 
-.copyLink {
+.callMedia {
   height: 3rem;
   width: 20rem;
 }
 
-.copyLinkButton {
+.pezerleButton {
   background-color: #019f7a;
   font-size: 20px;
   color: #1d222e;
@@ -108,7 +108,23 @@ body {
   perspective: 1000px;
 }
 
-.copyLinkButton:hover {
+.pezerleButton:hover {
+  transition: 300ms;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.endCallButton {
+  background-color: #019f7a;
+  font-size: 20px;
+  color: #1d222e;
+  border: none;
+  border-radius: 0 30px 0 30px;
+  width: 100%;
+  height: 100%;
+}
+
+.endCallButton:hover {
   transition: 300ms;
   cursor: pointer;
   color: #ffffff;
