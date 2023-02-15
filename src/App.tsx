@@ -46,10 +46,10 @@ function App() {
   useEffect(() => {
     const queryParams = new URLSearchParams(document.location.search);
     const callAddress = queryParams.get("to");
-    const baseUrl = "http://localhost:3000/";
+    const baseUrl = window.location.origin;
 
     if (currentLinkInput.current) {
-      currentLinkInput.current.value = `${baseUrl}?to=${clientAddress}`;
+      currentLinkInput.current.value = `${baseUrl}/?to=${clientAddress}`;
     }
 
     const peer = new Peer(clientAddress);
