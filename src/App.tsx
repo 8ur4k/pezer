@@ -63,12 +63,11 @@ function App() {
     });
 
     setTimeout(() => {
-      if (callAdress) {
+      if (callAddress) {
         navigator.mediaDevices.getUserMedia({ audio: true }).then(
           (stream) => {
-            const call = peer.call(callAdress, stream);
-            call.on("stream", (remoteStream) => {
-            });
+            const call = peer.call(callAddress, stream);
+            call.on("stream", (remoteStream) => {});
           },
           (err) => {
             console.error("Failed to get local stream", err);
