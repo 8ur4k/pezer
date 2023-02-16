@@ -57,7 +57,7 @@ function App() {
     peer.on("call", (call) => {
       console.log("call");
       if (callStatus == "IDLE") {
-        console.log(callStatus);
+        console.log("aaaaaaaaaaaa");
         setCallStatus("INCOMING_CALL");
         currentCall.current = call;
       }
@@ -76,6 +76,18 @@ function App() {
         );
       }
     }, 1000);
+
+    const handleEsc = (event: { keyCode: number }) => {
+      if (event.keyCode === 27) {
+        console.log(callStatus);
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, [callStatus, clientAddress]);
 
   return (
     <div className="body">
