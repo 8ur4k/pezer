@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./App.css";
 import Peer, { MediaConnection } from "peerjs";
+import { useGlobalState } from "./store/globalState";
 
 function App() {
   let currentLinkInput = useRef<HTMLInputElement>(null);
@@ -9,7 +10,7 @@ function App() {
   let amogus = useRef<HTMLAudioElement>(null);
   let currentCall = useRef<MediaConnection | null>(null);
 
-  const [callStatus, setCallStatus] = useState("IDLE");
+  const callStatus = useGlobalState((state) => state.callStatus);
   const [clientAddress] = useState(
     Math.random()
       .toString(36)
@@ -23,7 +24,7 @@ function App() {
   }
 
   function pezerle() {
-    setCallStatus("ON_CALL");
+    useGlobalState.setState({ callStatus: "ON_CALL" });
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then((stream) => {
@@ -39,25 +40,24 @@ function App() {
 
   function endCall() {
     currentCall?.current?.close();
-    setCallStatus("IDLE");
+    useGlobalState.setState({ callStatus: "IDLE" });
   }
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(document.location.search);
-    const callAddress = queryParams.get("to");
+    const callAddress = window.location.pathname.slice(1);
     const baseUrl = window.location.origin;
 
     if (currentLinkInput.current) {
-      currentLinkInput.current.value = `${baseUrl}/?to=${clientAddress}`;
+      currentLinkInput.current.value = `${baseUrl}/${clientAddress}`;
     }
 
     const peer = new Peer(clientAddress);
 
     peer.on("call", (call) => {
       console.log("call");
-      if (callStatus == "IDLE") {
+      if (useGlobalState.getState().callStatus == "IDLE") {
         console.log("aaaaaaaaaaaa");
-        setCallStatus("INCOMING_CALLg");
+        useGlobalState.setState({ callStatus: "INCOMING_CALL" });
         currentCall.current = call;
       }
     });
