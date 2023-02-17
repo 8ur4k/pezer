@@ -46,12 +46,11 @@ function App() {
   }
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(document.location.search);
-    const callAddress = queryParams.get("to");
+    const callAddress = window.location.pathname.substring(1);
     const baseUrl = window.location.origin;
 
     if (currentLinkInput.current) {
-      currentLinkInput.current.value = `${baseUrl}/?to=${clientAddress}`;
+      currentLinkInput.current.value = `${baseUrl}/${clientAddress}`;
     }
 
     const peer = new Peer(clientAddress);
@@ -121,7 +120,7 @@ function App() {
               className="pezerleButton"
               type="button"
               onClick={() => pezerle()}
-              value={callStatus}
+              value="P E Z E R L E!"
             />
             <p onClick={() => endCall()} className="declineText">
               Press to decline.
