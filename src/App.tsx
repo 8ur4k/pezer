@@ -162,3 +162,5 @@ function App() {
 }
 
 export default App;
+
+/* eslint eqeqeq: 0*/
