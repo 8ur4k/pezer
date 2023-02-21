@@ -10,3 +10,9 @@ Pezer is the simplest voice chat app. Send your link to anyone and start your *p
 4-) Browser http://localhost:3000/<br>
 5-) Copy your link using "copy" button and browse it in another browser tab<br>
 6-) After accessing your mic and answer call from first tab. You must be in a voice call with yourself🎉<br>
+
+# I used;
+`React`
+`Typescript`
+`peerjs libary`
+`zustand`
