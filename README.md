@@ -1,8 +1,8 @@
-# What is pezer
+# What is pezer?
 
 Pezer is the simplest voice chat app. Send your link to anyone and start your *peer to peer* call.<br>
 
-# How to run on your localhost
+# How to run on your localhost?
 
 1-) Run terminal first<br>
 2-) Navigate where you want to install project (f.e cd myProjects)<br>
