@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import "./App.css";
 import Peer, { MediaConnection } from "peerjs";
 import { useGlobalState } from "./store/globalState";
-import { redirect } from "react-router-dom";
 
 function App() {
   let currentLinkInput = useRef<HTMLInputElement>(null);
