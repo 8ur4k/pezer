@@ -15,4 +15,4 @@ Pezer is the simplest voice chat app. Send your link to anyone and start your *p
 `React`
 `Typescript`
 `peerjs libary`
-`zustand`
+`zustand libary`
