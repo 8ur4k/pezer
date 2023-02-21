@@ -12,7 +12,7 @@ Pezer is the simplest voice chat app. Send your link to anyone and start your *p
 6-) After accessing your mic and answer call from first tab. You must be in a voice call with yourself🎉<br>
 
 # I used;
-`React`
-`Typescript`
-`peerjs libary`
-`zustand libary`
+`React`<br>
+`TypeScript`<br>
+`peerjs library`<br>
+`zustand library`<br>
