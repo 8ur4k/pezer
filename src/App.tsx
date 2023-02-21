@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import "./App.css";
 import Peer, { MediaConnection } from "peerjs";
 import { useGlobalState } from "./store/globalState";
+import { redirect } from "react-router-dom";
 
 function App() {
   let currentLinkInput = useRef<HTMLInputElement>(null);
@@ -41,7 +42,7 @@ function App() {
   }
 
   function endCall() {
-    currentCall?.current?.close();
+    window.location.replace(window.location.origin);
     useGlobalState.setState({ callStatus: "IDLE" });
   }
 
@@ -62,7 +63,9 @@ function App() {
         navigator.mediaDevices.getUserMedia({ audio: true }).then(
           (stream) => {
             const call = peer.call(callAddress, stream);
-            call.on("stream", (remoteStream) => {});
+            call.on("stream", (remoteStream) => {
+              useGlobalState.setState({ callStatus: "ON_CALL" });
+            });
           },
           (err) => {
             console.error("Failed to get local stream", err);
