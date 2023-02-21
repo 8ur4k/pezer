@@ -19,7 +19,9 @@ function App() {
 
   function copyToClipboard(str: string) {
     if (navigator && navigator.clipboard && navigator.clipboard.writeText)
-      return navigator.clipboard.writeText(str);
+      return navigator.clipboard.writeText(
+        `${window.location.origin}/${clientAddress}`
+      );
     return Promise.reject("The Clipboard API is not available.");
   }
 
@@ -45,11 +47,6 @@ function App() {
 
   useEffect(() => {
     const callAddress = window.location.pathname.slice(1);
-    const baseUrl = window.location.origin;
-
-    if (currentLinkInput.current) {
-      currentLinkInput.current.value = `${baseUrl}/${clientAddress}`;
-    }
 
     const peer = new Peer(clientAddress);
 
@@ -96,22 +93,38 @@ function App() {
         <div className="clientLogin">
           <div className="clienInput">
             <input
-              ref={currentLinkInput}
+              value={
+                callStatus == "ON_CALL"
+                  ? `Ongoing call...`
+                  : `${window.location.origin}/${clientAddress}`
+              }
               type="text"
               disabled
               placeholder="Connection link"
             />
           </div>
-          <input
-            onClick={() =>
-              copyToClipboard(
-                currentLinkInput.current ? currentLinkInput.current?.value : ""
-              )
-            }
-            className="copyButton"
-            type="button"
-            value="Copy"
-          />
+          {callStatus !== "ON_CALL" && (
+            <input
+              onClick={() =>
+                copyToClipboard(
+                  currentLinkInput.current
+                    ? currentLinkInput.current?.value
+                    : ""
+                )
+              }
+              className="copyButton"
+              type="button"
+              value="Copy"
+            />
+          )}
+          {callStatus == "ON_CALL" && (
+            <input
+              onClick={() => endCall()}
+              className="copyButton"
+              type="button"
+              value="End"
+            />
+          )}
         </div>
         {callStatus == "INCOMING_CALL" && (
           <div className="callMedia">
@@ -130,16 +143,6 @@ function App() {
               id="audio-ringtone"
               src="/assets/ringtone.mp3"
             ></audio>
-          </div>
-        )}
-        {callStatus == "ON_CALL" && (
-          <div className="callMedia">
-            <input
-              className="endCallButton"
-              type="button"
-              onClick={() => endCall()}
-              value="END CALL"
-            />
           </div>
         )}
         <audio
