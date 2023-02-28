@@ -27,6 +27,31 @@ body {
   border-radius: 0 100px 0 100px;
 }
 
+.toolKit {
+  background-color: #1d222e;
+  color: #a6aebe;
+  display: flex;
+  width: 20%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  padding: 1rem;
+  margin: 1.5% auto;
+  border: 2px #019f7a solid;
+  border-radius: 20px;
+}
+
+.toolKit .toolKitButtons {
+  cursor: pointer;
+  margin: 0 auto;
+  padding: 0.5em;
+  border-radius: 5px;
+}
+
+.toolKit .toolKitButtons:hover {
+  background-color: #2a3143;
+}
+
 .clientLogin {
   margin: 2rem;
   display: table;

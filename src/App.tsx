@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import "./App.css";
 import Peer, { MediaConnection } from "peerjs";
 import { useGlobalState } from "./store/globalState";
+import { create } from "zustand";
 
 function App() {
   let currentLinkInput = useRef<HTMLInputElement>(null);
@@ -17,6 +18,38 @@ function App() {
       .substring(2, 7 + 2)
   );
 
+  const useHost = create((set) => ({
+    hostID: clientAddress,
+    hostCam: false,
+    hostMic: true,
+    screenShare: false,
+    setCam: () =>
+      set((state: any) => ({
+        hostCam: !state.hostCam,
+      })),
+    setMic: () =>
+      set((state: any) => ({
+        hostMic: !state.hostMic,
+      })),
+    setScreenShare: () =>
+      set((state: any) => ({
+        screenShare: !state.screenShare,
+      })),
+  }));
+
+  const setCam = useHost((state: any) => state.setCam);
+  const setMic = useHost((state: any) => state.setMic);
+  const setScreenShare = useHost((state: any) => state.setScreenShare);
+
+  function handleOptions(opt: string) {
+    console.log(opt);
+    if (opt == "camera") setCam();
+    if (opt == "microphone") setMic();
+    if (opt == "screenshare") setScreenShare();
+
+    console.log(useHost.getState());
+  }
+
   function copyToClipboard(str: string) {
     if (navigator && navigator.clipboard && navigator.clipboard.writeText)
       return navigator.clipboard.writeText(
@@ -28,7 +61,7 @@ function App() {
   function pezerle() {
     useGlobalState.setState({ callStatus: "ON_CALL" });
     navigator.mediaDevices
-      .getUserMedia({ audio: true })
+      .getUserMedia({ audio: true, video: { width: 1920, height: 1080 } })
       .then((stream) => {
         currentCall?.current?.answer(stream); // Answer the call with an A/V stream.
         currentCall?.current?.on("stream", (remoteStream) => {
@@ -59,17 +92,19 @@ function App() {
 
     setTimeout(() => {
       if (callAddress) {
-        navigator.mediaDevices.getUserMedia({ audio: true }).then(
-          (stream) => {
-            const call = peer.call(callAddress, stream);
-            call.on("stream", (remoteStream) => {
-              useGlobalState.setState({ callStatus: "ON_CALL" });
-            });
-          },
-          (err) => {
-            console.error("Failed to get local stream", err);
-          }
-        );
+        navigator.mediaDevices
+          .getUserMedia({ audio: true, video: { width: 1920, height: 1080 } })
+          .then(
+            (stream) => {
+              const call = peer.call(callAddress, stream);
+              call.on("stream", (remoteStream) => {
+                useGlobalState.setState({ callStatus: "ON_CALL" });
+              });
+            },
+            (err) => {
+              console.error("Failed to get local stream", err);
+            }
+          );
       }
     }, 1000);
   }, [callStatus, clientAddress]);
@@ -146,6 +181,26 @@ function App() {
             <audio ref={amogus!} autoPlay src="/assets/amogus.mp3"></audio>
           </div>
         )}
+      </div>
+      <div className="toolKit">
+        <div className="toolKitButtons" onClick={() => handleOptions("camera")}>
+          <img src="../assets/camera.png" alt="" />
+        </div>
+        <div
+          className="toolKitButtons"
+          onClick={() => handleOptions("microphone")}
+        >
+          <img src="../assets/microphone.png" alt="" />
+        </div>
+        <div
+          className="toolKitButtons"
+          onClick={() => handleOptions("screenshare")}
+        >
+          <img src="../assets/screenshare.png" alt="" />
+        </div>
+        <div className="toolKitButtons">
+          <img src="../assets/end.png" alt="" />
+        </div>
       </div>
       <script src="https://unpkg.com/peerjs@1.4.6/dist/peerjs.min.js"></script>
       <script src="index.js"></script>
