@@ -2,6 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import "./App.css";
 import Peer, { MediaConnection } from "peerjs";
 import { useGlobalState } from "./store/globalState";
+import {
+  initialHostState,
+  initialNotHostState,
+  initialCallState,
+} from "./store/initialState";
 import { create } from "zustand";
 
 function App() {
@@ -18,36 +23,24 @@ function App() {
       .substring(2, 7 + 2)
   );
 
-  const useHost = create((set) => ({
-    hostID: clientAddress,
-    hostCam: false,
-    hostMic: true,
-    screenShare: false,
-    setCam: () =>
-      set((state: any) => ({
-        hostCam: !state.hostCam,
-      })),
-    setMic: () =>
-      set((state: any) => ({
-        hostMic: !state.hostMic,
-      })),
-    setScreenShare: () =>
-      set((state: any) => ({
-        screenShare: !state.screenShare,
-      })),
-  }));
+  const useHost = create<ReturnType<typeof initialHostState>>(initialHostState);
+  const useNotHost =
+    create<ReturnType<typeof initialNotHostState>>(initialNotHostState);
+  const useCall = create<ReturnType<typeof initialCallState>>(initialCallState);
 
-  const setCam = useHost((state: any) => state.setCam);
-  const setMic = useHost((state: any) => state.setMic);
-  const setScreenShare = useHost((state: any) => state.setScreenShare);
+  const toggleCam = useHost((state: any) => state.toggleHostCam);
+  const toggleMic = useHost((state: any) => state.toggleHostMic);
+  const toggleScreenShare = useHost(
+    (state: any) => state.toggleHostScreenShare
+  );
 
   function handleOptions(opt: string) {
     console.log(opt);
-    if (opt == "camera") setCam();
-    if (opt == "microphone") setMic();
-    if (opt == "screenshare") setScreenShare();
+    if (opt == "camera") toggleCam();
+    if (opt == "microphone") toggleMic();
+    if (opt == "screenshare") toggleScreenShare();
 
-    console.log(useHost.getState());
+    // console.log(useHost.getState().hostCam);
   }
 
   function copyToClipboard(str: string) {
@@ -184,19 +177,19 @@ function App() {
       </div>
       <div className="toolKit">
         <div className="toolKitButtons" onClick={() => handleOptions("camera")}>
-          <img src="../assets/camera.png" alt="" />
+          <img className="defaultSvg" src="../assets/camera.svg" alt="" />
         </div>
         <div
           className="toolKitButtons"
           onClick={() => handleOptions("microphone")}
         >
-          <img src="../assets/microphone.png" alt="" />
+          <img className="defaultSvg" src="../assets/microphone.svg" alt="" />
         </div>
         <div
           className="toolKitButtons"
           onClick={() => handleOptions("screenshare")}
         >
-          <img src="../assets/screenshare.png" alt="" />
+          <img className="defaultSvg" src="../assets/screenshare.svg" alt="" />
         </div>
         <div className="toolKitButtons">
           <img src="../assets/end.png" alt="" />

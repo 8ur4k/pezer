@@ -31,7 +31,7 @@ body {
   background-color: #1d222e;
   color: #a6aebe;
   display: flex;
-  width: 20%;
+  width: 20rem;
   justify-content: center;
   align-items: center;
   flex-direction: row;
@@ -169,4 +169,15 @@ body {
 .declineText:hover {
   color: #019f7a;
   transition: 0.2s;
+  color: #ededed;
+}
+
+.defaultSvg {
+  filter: invert(50%) sepia(52%) saturate(7454%) hue-rotate(146deg)
+    brightness(96%) contrast(99%);
+}
+
+.enabledSvg {
+  filter: invert(89%) sepia(96%) saturate(5176%) hue-rotate(182deg)
+    brightness(132%) contrast(86%);
 }
