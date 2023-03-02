@@ -22,11 +22,7 @@ function App() {
   let currentCall = useRef<MediaConnection | null>(null);
 
   const callStatus = useGlobalState((state) => state.callStatus);
-  const [clientAddress] = useState(
-    Math.random()
-      .toString(36)
-      .substring(2, 7 + 2)
-  );
+  const [clientAddress] = useState(useHost((state: any) => state.hostID));
 
   const hostCam = useHost((state: any) => state.hostCam);
   const hostMic = useHost((state: any) => state.hostMic);
