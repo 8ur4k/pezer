@@ -65,8 +65,10 @@ function App() {
   }
 
   function endCall() {
-    window.location.replace(window.location.origin);
-    useGlobalState.setState({ callStatus: "IDLE" });
+    if (useGlobalState.getState().callStatus !== "IDLE") {
+      window.location.replace(window.location.origin);
+      useGlobalState.setState({ callStatus: "IDLE" });
+    }
   }
 
   useEffect(() => {
@@ -177,7 +179,7 @@ function App() {
         <div className="toolKitButtons" onClick={() => handleOptions("camera")}>
           <img
             className={hostCam ? "enabledSvg" : "disabledSvg"}
-            src="../assets/camera.svg"
+            src="../assets/video.svg"
             alt=""
           />
         </div>
@@ -197,11 +199,11 @@ function App() {
         >
           <img
             className={hostScreenShare ? "enabledSvg" : "disabledSvg"}
-            src="../assets/screenshare.svg"
+            src="../assets/share-screen.svg"
             alt=""
           />
         </div>
-        <div className="toolKitButtons">
+        <div className="toolKitButtons" onClick={() => endCall()}>
           <img src="../assets/end.png" alt="" />
         </div>
       </div>
