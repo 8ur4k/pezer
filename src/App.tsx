@@ -9,6 +9,11 @@ import {
 } from "./store/initialState";
 import { create } from "zustand";
 
+const useHost = create<ReturnType<typeof initialHostState>>(initialHostState);
+const useNotHost =
+  create<ReturnType<typeof initialNotHostState>>(initialNotHostState);
+const useCall = create<ReturnType<typeof initialCallState>>(initialCallState);
+
 function App() {
   let currentLinkInput = useRef<HTMLInputElement>(null);
   let auido1 = useRef<HTMLAudioElement>(null);
@@ -23,11 +28,9 @@ function App() {
       .substring(2, 7 + 2)
   );
 
-  const useHost = create<ReturnType<typeof initialHostState>>(initialHostState);
-  const useNotHost =
-    create<ReturnType<typeof initialNotHostState>>(initialNotHostState);
-  const useCall = create<ReturnType<typeof initialCallState>>(initialCallState);
-
+  const hostCam = useHost((state: any) => state.hostCam);
+  const hostMic = useHost((state: any) => state.hostMic);
+  const hostScreenShare = useHost((state: any) => state.hostScreenShare);
   const toggleCam = useHost((state: any) => state.toggleHostCam);
   const toggleMic = useHost((state: any) => state.toggleHostMic);
   const toggleScreenShare = useHost(
@@ -35,12 +38,11 @@ function App() {
   );
 
   function handleOptions(opt: string) {
-    console.log(opt);
     if (opt == "camera") toggleCam();
     if (opt == "microphone") toggleMic();
     if (opt == "screenshare") toggleScreenShare();
 
-    // console.log(useHost.getState().hostCam);
+    console.log(useHost.getState());
   }
 
   function copyToClipboard(str: string) {
@@ -177,19 +179,31 @@ function App() {
       </div>
       <div className="toolKit">
         <div className="toolKitButtons" onClick={() => handleOptions("camera")}>
-          <img className="defaultSvg" src="../assets/camera.svg" alt="" />
+          <img
+            className={hostCam ? "enabledSvg" : "disabledSvg"}
+            src="../assets/camera.svg"
+            alt=""
+          />
         </div>
         <div
           className="toolKitButtons"
           onClick={() => handleOptions("microphone")}
         >
-          <img className="defaultSvg" src="../assets/microphone.svg" alt="" />
+          <img
+            className={hostMic ? "enabledSvg" : "disabledSvg"}
+            src="../assets/microphone.svg"
+            alt=""
+          />
         </div>
         <div
           className="toolKitButtons"
           onClick={() => handleOptions("screenshare")}
         >
-          <img className="defaultSvg" src="../assets/screenshare.svg" alt="" />
+          <img
+            className={hostScreenShare ? "enabledSvg" : "disabledSvg"}
+            src="../assets/screenshare.svg"
+            alt=""
+          />
         </div>
         <div className="toolKitButtons">
           <img src="../assets/end.png" alt="" />

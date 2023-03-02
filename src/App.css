@@ -172,12 +172,13 @@ body {
   color: #ededed;
 }
 
-.defaultSvg {
+.disabledSvg {
   filter: invert(50%) sepia(52%) saturate(7454%) hue-rotate(146deg)
     brightness(96%) contrast(99%);
+  opacity: 50%;
 }
 
 .enabledSvg {
-  filter: invert(89%) sepia(96%) saturate(5176%) hue-rotate(182deg)
-    brightness(132%) contrast(86%);
+  filter: invert(50%) sepia(52%) saturate(7454%) hue-rotate(146deg)
+    brightness(96%) contrast(99%);
 }
