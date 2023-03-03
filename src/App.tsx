@@ -4,8 +4,8 @@ import Peer, { MediaConnection } from "peerjs";
 import { useGlobalState } from "./store/globalState";
 import {
   initialHostState,
-  initialNotHostState,
-  initialCallState,
+  // initialNotHostState,
+  // initialCallState,
 } from "./store/initialState";
 import { create } from "zustand";
 
