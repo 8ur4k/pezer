@@ -10,9 +10,9 @@ import {
 import { create } from "zustand";
 
 const useHost = create<ReturnType<typeof initialHostState>>(initialHostState);
-const useNotHost =
-  create<ReturnType<typeof initialNotHostState>>(initialNotHostState);
-const useCall = create<ReturnType<typeof initialCallState>>(initialCallState);
+// const useNotHost =
+//   create<ReturnType<typeof initialNotHostState>>(initialNotHostState);
+// const useCall = create<ReturnType<typeof initialCallState>>(initialCallState);
 
 function App() {
   let currentLinkInput = useRef<HTMLInputElement>(null);
