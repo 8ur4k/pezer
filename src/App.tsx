@@ -86,6 +86,8 @@ function App() {
               const call = peer.call(callAddress, stream);
               call.on("stream", (remoteStream) => {
                 useGlobalState.setState({ callStatus: "ON_CALL" });
+                console.log("PEZERLE remoteStream" + remoteStream);
+                if (audio1.current) audio1.current.srcObject = remoteStream;
               });
             },
             (err) => {
@@ -94,7 +96,7 @@ function App() {
           );
       }
     }, 1000);
-  }, [callStatus]);
+  }, [callStatus, clientAddress]);
 
   return (
     <div className="body">
@@ -151,7 +153,7 @@ function App() {
           </div>
         )}
         <audio
-          className="dNone"
+          // className="dNone"
           ref={audio1!}
           controls
           autoPlay
