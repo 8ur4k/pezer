@@ -67,6 +67,7 @@ function App() {
   }
 
   useEffect(() => {
+    console.log("useEffect");
     const peer = new Peer(clientAddress);
 
     peer.on("call", (call) => {
@@ -96,7 +97,7 @@ function App() {
           );
       }
     }, 1000);
-  }, [callStatus, clientAddress, callAddress]);
+  }, [callStatus, callAddress]);
 
   return (
     <div className="body">
@@ -153,7 +154,7 @@ function App() {
           </div>
         )}
         <audio
-          // className="dNone"
+          className="dNone"
           ref={audio1!}
           controls
           autoPlay
