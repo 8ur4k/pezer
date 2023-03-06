@@ -96,7 +96,7 @@ function App() {
           );
       }
     }, 1000);
-  }, [callStatus, clientAddress]);
+  }, [callStatus, clientAddress, callAddress]);
 
   return (
     <div className="body">
