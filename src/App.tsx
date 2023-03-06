@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import "./App.css";
 import Peer, { MediaConnection } from "peerjs";
 import { useGlobalState } from "./store/globalState";
@@ -6,7 +6,6 @@ import { initialHostState } from "./store/initialState";
 import { create } from "zustand";
 
 function App() {
-  let currentLinkInput = useRef<HTMLInputElement>(null);
   let audio1 = useRef<HTMLAudioElement>(null);
   let ringtone = useRef<HTMLAudioElement>(null);
   let amogus = useRef<HTMLAudioElement>(null);
