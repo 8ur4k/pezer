@@ -2,21 +2,27 @@ import { useEffect, useState, useRef } from "react";
 import "./App.css";
 import Peer, { MediaConnection } from "peerjs";
 import { useGlobalState } from "./store/globalState";
-import { initialHostState } from "./store/initialState";
+import {
+  initialHostState,
+  // initialNotHostState,
+  // initialCallState,
+} from "./store/initialState";
 import { create } from "zustand";
+
+const useHost = create<ReturnType<typeof initialHostState>>(initialHostState);
+// const useNotHost =
+//   create<ReturnType<typeof initialNotHostState>>(initialNotHostState);
+// const useCall = create<ReturnType<typeof initialCallState>>(initialCallState);
 
 function App() {
   let currentLinkInput = useRef<HTMLInputElement>(null);
-  let audio1 = useRef<HTMLAudioElement>(null);
+  let auido1 = useRef<HTMLAudioElement>(null);
   let ringtone = useRef<HTMLAudioElement>(null);
   let amogus = useRef<HTMLAudioElement>(null);
   let currentCall = useRef<MediaConnection | null>(null);
 
-  const useHost = create<ReturnType<typeof initialHostState>>(initialHostState);
-
-  const clientAddress = useHost((state: any) => state.hostID);
-  const callAddress = window.location.pathname.slice(1);
   const callStatus = useGlobalState((state) => state.callStatus);
+  const [clientAddress] = useState(useHost((state: any) => state.hostID));
 
   const hostCam = useHost((state: any) => state.hostCam);
   const hostMic = useHost((state: any) => state.hostMic);
@@ -35,7 +41,7 @@ function App() {
     console.log(useHost.getState());
   }
 
-  function copyToClipboard() {
+  function copyToClipboard(str: string) {
     if (navigator && navigator.clipboard && navigator.clipboard.writeText)
       return navigator.clipboard.writeText(
         `${window.location.origin}/${clientAddress}`
@@ -46,13 +52,11 @@ function App() {
   function pezerle() {
     useGlobalState.setState({ callStatus: "ON_CALL" });
     navigator.mediaDevices
-      .getUserMedia({ audio: true })
+      .getUserMedia({ audio: true, video: { width: 1920, height: 1080 } })
       .then((stream) => {
-        console.log("PEZERLE stream" + stream);
-        currentCall?.current?.answer(stream);
+        currentCall?.current?.answer(stream); // Answer the call with an A/V stream.
         currentCall?.current?.on("stream", (remoteStream) => {
-          console.log("PEZERLE remoteStream" + remoteStream);
-          if (audio1.current) audio1.current.srcObject = remoteStream;
+          if (auido1.current) auido1.current.srcObject = remoteStream;
         });
       })
       .catch((err) => {
@@ -68,10 +72,11 @@ function App() {
   }
 
   useEffect(() => {
+    const callAddress = window.location.pathname.slice(1);
+
     const peer = new Peer(clientAddress);
 
     peer.on("call", (call) => {
-      console.log("call", call);
       if (useGlobalState.getState().callStatus == "IDLE") {
         useGlobalState.setState({ callStatus: "INCOMING_CALL" });
         currentCall.current = call;
@@ -95,7 +100,7 @@ function App() {
           );
       }
     }, 1000);
-  }, [callStatus]);
+  }, [callStatus, clientAddress]);
 
   return (
     <div className="body">
@@ -117,7 +122,13 @@ function App() {
           </div>
           {callStatus !== "ON_CALL" && (
             <input
-              onClick={() => copyToClipboard()}
+              onClick={() =>
+                copyToClipboard(
+                  currentLinkInput.current
+                    ? currentLinkInput.current?.value
+                    : ""
+                )
+              }
               className="copyButton"
               type="button"
               value="Copy"
@@ -153,7 +164,7 @@ function App() {
         )}
         <audio
           className="dNone"
-          ref={audio1!}
+          ref={auido1!}
           controls
           autoPlay
           id="audio-1"
