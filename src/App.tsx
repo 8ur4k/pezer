@@ -4,16 +4,14 @@ import Peer, { MediaConnection } from "peerjs";
 import { useGlobalState } from "./store/globalState";
 import {
   initialHostState,
-  // initialNotHostState,
+  initialNotHostState,
   // initialCallState,
 } from "./store/initialState";
 import { create } from "zustand";
 
-const hostUse = create<ReturnType<typeof initialHostState>>(initialHostState);
-
-// const useNotHost =
-//   create<ReturnType<typeof initialNotHostState>>(initialNotHostState);
-// const useCall = create<ReturnType<typeof initialCallState>>(initialCallState);
+const useHost = create<ReturnType<typeof initialHostState>>(initialHostState);
+const useNotHost =
+  create<ReturnType<typeof initialNotHostState>>(initialNotHostState);
 
 function App() {
   console.log("app");
@@ -24,23 +22,32 @@ function App() {
 
   const callStatus = useGlobalState((state) => state.callStatus);
   const callAddress = window.location.pathname.slice(1);
-  const clientAddress = hostUse((state: any) => state.hostID);
+  const clientAddress = useHost((state: any) => state.hostID);
 
-  const hostCam = hostUse((state: any) => state.hostCam);
-  const hostMic = hostUse((state: any) => state.hostMic);
-  const hostScreenShare = hostUse((state: any) => state.hostScreenShare);
-  const toggleCam = hostUse((state: any) => state.toggleHostCam);
-  const toggleMic = hostUse((state: any) => state.toggleHostMic);
-  const toggleScreenShare = hostUse(
-    (state: any) => state.toggleHostScreenShare
+  const hostCam = useHost((state: any) => state.hostCam);
+  const hostMic = useHost((state: any) => state.hostMic);
+  const hostScreenShare = useHost((state: any) => state.hostScreenShare);
+  const setHostCam = useHost((state: any) => state.setHostCam);
+  const setHostMic = useHost((state: any) => state.setHostMic);
+  const setHostScreenShare = useHost((state: any) => state.setHostScreenShare);
+
+  const notHostCam = useNotHost((state: any) => state.notHostCam);
+  const notHostMic = useNotHost((state: any) => state.notHostMic);
+  const notHostScreenShare = useNotHost(
+    (state: any) => state.notHostScreenShare
+  );
+  const setNotHostCam = useNotHost((state: any) => state.setNotHostCam);
+  const setNotHostMic = useNotHost((state: any) => state.setNotHostMic);
+  const setNotHostScreenShare = useNotHost(
+    (state: any) => state.setNotHostScreenShare
   );
 
   function handleOptions(opt: string) {
-    if (opt == "camera") toggleCam();
-    if (opt == "microphone") toggleMic();
-    if (opt == "screenshare") toggleScreenShare();
+    if (opt == "camera") setHostCam();
+    if (opt == "microphone") setHostMic();
+    if (opt == "screenshare") setHostScreenShare();
 
-    console.log(hostUse.getState());
+    console.log(useHost.getState());
   }
 
   function copyToClipboard() {
