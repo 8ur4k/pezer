@@ -21,7 +21,8 @@ function App() {
   let currentCall = useRef<MediaConnection | null>(null);
 
   const callStatus = useGlobalState((state) => state.callStatus);
-  const callAddress = window.location.pathname.slice(1);
+
+  const callAddress = useNotHost((state: any) => state.notHostID);
   const clientAddress = useHost((state: any) => state.hostID);
 
   const hostCam = useHost((state: any) => state.hostCam);
@@ -43,6 +44,7 @@ function App() {
   );
 
   function handleOptions(opt: string) {
+    console.log(useHost.getState().hostID);
     if (opt == "camera") setHostCam();
     if (opt == "microphone") setHostMic();
     if (opt == "screenshare") setHostScreenShare();

@@ -20,7 +20,7 @@ export const initialHostState = (set: any) => ({
 });
 
 export const initialNotHostState = (set: any) => ({
-  notHostID: null,
+  notHostID: window.location.pathname.slice(1),
   notHostCam: null,
   notHostMic: null,
   notHostScreenShare: null,
