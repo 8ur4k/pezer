@@ -17,7 +17,6 @@ const hostUse = create<ReturnType<typeof initialHostState>>(initialHostState);
 
 function App() {
   console.log("app");
-  let currentLinkInput = useRef<HTMLInputElement>(null);
   let auido1 = useRef<HTMLAudioElement>(null);
   let ringtone = useRef<HTMLAudioElement>(null);
   let amogus = useRef<HTMLAudioElement>(null);
@@ -44,7 +43,7 @@ function App() {
     console.log(hostUse.getState());
   }
 
-  function copyToClipboard(str: string) {
+  function copyToClipboard() {
     if (navigator && navigator.clipboard && navigator.clipboard.writeText)
       return navigator.clipboard.writeText(
         `${window.location.origin}/${clientAddress}`
@@ -124,13 +123,7 @@ function App() {
           </div>
           {callStatus !== "ON_CALL" && (
             <input
-              onClick={() =>
-                copyToClipboard(
-                  currentLinkInput.current
-                    ? currentLinkInput.current?.value
-                    : ""
-                )
-              }
+              onClick={() => copyToClipboard()}
               className="copyButton"
               type="button"
               value="Copy"
