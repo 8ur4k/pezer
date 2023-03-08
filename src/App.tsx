@@ -15,7 +15,7 @@ const useNotHost =
 
 function App() {
   console.log("app");
-  let auido1 = useRef<HTMLAudioElement>(null);
+  let audio1 = useRef<HTMLAudioElement>(null);
   let ringtone = useRef<HTMLAudioElement>(null);
   let amogus = useRef<HTMLAudioElement>(null);
   let currentCall = useRef<MediaConnection | null>(null);
@@ -67,7 +67,7 @@ function App() {
       .then((stream) => {
         currentCall?.current?.answer(stream); // Answer the call with an A/V stream.
         currentCall?.current?.on("stream", (remoteStream) => {
-          if (auido1.current) auido1.current.srcObject = remoteStream;
+          if (audio1.current) audio1.current.srcObject = remoteStream;
         });
       })
       .catch((err) => {
@@ -100,7 +100,7 @@ function App() {
             const call = peer.call(callAddress, stream);
             console.log("call");
             call.on("stream", (remoteStream) => {
-              if (auido1.current) auido1.current.srcObject = remoteStream;
+              if (audio1.current) audio1.current.srcObject = remoteStream;
               useGlobalState.setState({ callStatus: "ON_CALL" });
             });
           },
@@ -168,7 +168,7 @@ function App() {
         )}
         <audio
           className="dNone"
-          ref={auido1!}
+          ref={audio1!}
           controls
           autoPlay
           id="audio-1"
