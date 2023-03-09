@@ -14,7 +14,6 @@ const useNotHost =
   create<ReturnType<typeof initialNotHostState>>(initialNotHostState);
 
 function App() {
-  console.log("app");
   let audio1 = useRef<HTMLAudioElement>(null);
   let ringtone = useRef<HTMLAudioElement>(null);
   let amogus = useRef<HTMLAudioElement>(null);
@@ -25,32 +24,32 @@ function App() {
   const callAddress = useNotHost((state: any) => state.notHostID);
   const clientAddress = useHost((state: any) => state.hostID);
 
-  const hostCam = useHost((state: any) => state.hostCam);
-  const hostMic = useHost((state: any) => state.hostMic);
-  const hostScreenShare = useHost((state: any) => state.hostScreenShare);
-  const setHostCam = useHost((state: any) => state.setHostCam);
-  const setHostMic = useHost((state: any) => state.setHostMic);
-  const setHostScreenShare = useHost((state: any) => state.setHostScreenShare);
+  // const hostCam = useHost((state: any) => state.hostCam);
+  // const hostMic = useHost((state: any) => state.hostMic);
+  // const hostScreenShare = useHost((state: any) => state.hostScreenShare);
+  // const setHostCam = useHost((state: any) => state.setHostCam);
+  // const setHostMic = useHost((state: any) => state.setHostMic);
+  // const setHostScreenShare = useHost((state: any) => state.setHostScreenShare);
 
-  const notHostCam = useNotHost((state: any) => state.notHostCam);
-  const notHostMic = useNotHost((state: any) => state.notHostMic);
-  const notHostScreenShare = useNotHost(
-    (state: any) => state.notHostScreenShare
-  );
-  const setNotHostCam = useNotHost((state: any) => state.setNotHostCam);
-  const setNotHostMic = useNotHost((state: any) => state.setNotHostMic);
-  const setNotHostScreenShare = useNotHost(
-    (state: any) => state.setNotHostScreenShare
-  );
+  // const notHostCam = useNotHost((state: any) => state.notHostCam);
+  // const notHostMic = useNotHost((state: any) => state.notHostMic);
+  // const notHostScreenShare = useNotHost(
+  //   (state: any) => state.notHostScreenShare
+  // );
+  // const setNotHostCam = useNotHost((state: any) => state.setNotHostCam);
+  // const setNotHostMic = useNotHost((state: any) => state.setNotHostMic);
+  // const setNotHostScreenShare = useNotHost(
+  //   (state: any) => state.setNotHostScreenShare
+  // );
 
-  function handleOptions(opt: string) {
-    console.log(useHost.getState().hostID);
-    if (opt == "camera") setHostCam();
-    if (opt == "microphone") setHostMic();
-    if (opt == "screenshare") setHostScreenShare();
+  // function handleOptions(opt: string) {
+  //   console.log(useHost.getState().hostID);
+  //   if (opt == "camera") setHostCam();
+  //   if (opt == "microphone") setHostMic();
+  //   if (opt == "screenshare") setHostScreenShare();
 
-    console.log(useHost.getState());
-  }
+  //   console.log(useHost.getState());
+  // }
 
   function copyToClipboard() {
     if (navigator && navigator.clipboard && navigator.clipboard.writeText)
@@ -83,7 +82,6 @@ function App() {
   }
 
   useEffect(() => {
-    console.log("useEffect");
     const peer = new Peer(clientAddress);
 
     peer.on("call", (call) => {
@@ -98,7 +96,6 @@ function App() {
         navigator.mediaDevices.getUserMedia({ audio: true }).then(
           (stream) => {
             const call = peer.call(callAddress, stream);
-            console.log("call");
             call.on("stream", (remoteStream) => {
               if (audio1.current) audio1.current.srcObject = remoteStream;
               useGlobalState.setState({ callStatus: "ON_CALL" });
@@ -179,7 +176,7 @@ function App() {
           </div>
         )}
       </div>
-      <div className="toolKit">
+      {/* <div className="toolKit">
         <div className="toolKitButtons" onClick={() => handleOptions("camera")}>
           <img
             className={hostCam ? "enabledSvg" : "disabledSvg"}
@@ -210,7 +207,7 @@ function App() {
         <div className="toolKitButtons" onClick={() => endCall()}>
           <img src="../assets/end.png" alt="" />
         </div>
-      </div>
+      </div> */}
       <script src="https://unpkg.com/peerjs@1.4.6/dist/peerjs.min.js"></script>
       <script src="index.js"></script>
     </div>
