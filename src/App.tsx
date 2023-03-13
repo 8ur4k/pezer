@@ -2,11 +2,7 @@ import { useEffect, useRef } from "react";
 import "./App.css";
 import Peer, { MediaConnection } from "peerjs";
 import { useGlobalState } from "./store/globalState";
-import {
-  initialHostState,
-  initialNotHostState,
-  // initialCallState,
-} from "./store/initialState";
+import { initialHostState, initialNotHostState } from "./store/initialState";
 import { create } from "zustand";
 
 const useHost = create<ReturnType<typeof initialHostState>>(initialHostState);
@@ -23,33 +19,6 @@ function App() {
 
   const callAddress = useNotHost((state: any) => state.notHostID);
   const clientAddress = useHost((state: any) => state.hostID);
-
-  // const hostCam = useHost((state: any) => state.hostCam);
-  // const hostMic = useHost((state: any) => state.hostMic);
-  // const hostScreenShare = useHost((state: any) => state.hostScreenShare);
-  // const setHostCam = useHost((state: any) => state.setHostCam);
-  // const setHostMic = useHost((state: any) => state.setHostMic);
-  // const setHostScreenShare = useHost((state: any) => state.setHostScreenShare);
-
-  // const notHostCam = useNotHost((state: any) => state.notHostCam);
-  // const notHostMic = useNotHost((state: any) => state.notHostMic);
-  // const notHostScreenShare = useNotHost(
-  //   (state: any) => state.notHostScreenShare
-  // );
-  // const setNotHostCam = useNotHost((state: any) => state.setNotHostCam);
-  // const setNotHostMic = useNotHost((state: any) => state.setNotHostMic);
-  // const setNotHostScreenShare = useNotHost(
-  //   (state: any) => state.setNotHostScreenShare
-  // );
-
-  // function handleOptions(opt: string) {
-  //   console.log(useHost.getState().hostID);
-  //   if (opt == "camera") setHostCam();
-  //   if (opt == "microphone") setHostMic();
-  //   if (opt == "screenshare") setHostScreenShare();
-
-  //   console.log(useHost.getState());
-  // }
 
   function copyToClipboard() {
     if (navigator && navigator.clipboard && navigator.clipboard.writeText)
@@ -183,38 +152,6 @@ function App() {
           </div>
         )}
       </div>
-      {/* <div className="toolKit">
-        <div className="toolKitButtons" onClick={() => handleOptions("camera")}>
-          <img
-            className={hostCam ? "enabledSvg" : "disabledSvg"}
-            src="../assets/video.svg"
-            alt=""
-          />
-        </div>
-        <div
-          className="toolKitButtons"
-          onClick={() => handleOptions("microphone")}
-        >
-          <img
-            className={hostMic ? "enabledSvg" : "disabledSvg"}
-            src="../assets/microphone.svg"
-            alt=""
-          />
-        </div>
-        <div
-          className="toolKitButtons"
-          onClick={() => handleOptions("screenshare")}
-        >
-          <img
-            className={hostScreenShare ? "enabledSvg" : "disabledSvg"}
-            src="../assets/share-screen.svg"
-            alt=""
-          />
-        </div>
-        <div className="toolKitButtons" onClick={() => endCall()}>
-          <img src="../assets/end.png" alt="" />
-        </div>
-      </div> */}
       <script src="https://unpkg.com/peerjs@1.4.6/dist/peerjs.min.js"></script>
       <script src="index.js"></script>
     </div>
