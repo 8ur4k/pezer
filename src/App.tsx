@@ -65,6 +65,10 @@ function App() {
       .getUserMedia({ audio: true })
       .then((stream) => {
         currentCall?.current?.answer(stream); // Answer the call with an A/V stream.
+
+        currentCall?.current?.on("iceStateChanged", function (state) {
+          if (state === "disconnected") endCall();
+        });
         currentCall?.current?.on("stream", (remoteStream) => {
           if (audio1.current) audio1.current.srcObject = remoteStream;
         });
@@ -96,6 +100,9 @@ function App() {
         navigator.mediaDevices.getUserMedia({ audio: true }).then(
           (stream) => {
             const call = peer.call(callAddress, stream);
+            call.on("iceStateChanged", function (state) {
+              if (state === "disconnected") endCall();
+            });
             call.on("stream", (remoteStream) => {
               if (audio1.current) audio1.current.srcObject = remoteStream;
               useGlobalState.setState({ callStatus: "ON_CALL" });
